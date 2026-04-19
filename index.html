@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narrativa Digital vs. Narrativa Tradicional | Blog Académico</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  :root {
+    --ink: #1a1208;
+    --ink-soft: #3d3020;
+    --muted: #7a6e60;
+    --light-muted: #b0a898;
+    --cream: #faf7f2;
+    --warm-white: #fff9f2;
+    --accent: #c0392b;
+    --accent-light: #e8d5d3;
+    --accent-dark: #8e2219;
+    --gold: #b8860b;
+    --gold-light: #f5e8c0;
+    --border: #e0d8cc;
+    --border-strong: #c8b89a;
+  }
+ 
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+ 
+  /* ── HEADER ─────────────────────────────────────────── */
+  .site-header {
+    background: var(--ink);
+    padding: 0 2rem;
+    border-bottom: 3px solid var(--accent);
+  }
+  .site-header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .site-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--warm-white);
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .site-nav a {
+    color: var(--light-muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-left: 2rem;
+    transition: color 0.2s;
+  }
+  .site-nav a:hover { color: var(--warm-white); }
+ 
+  /* ── HERO ────────────────────────────────────────────── */
+  .hero {
+    background: var(--ink);
+    color: var(--warm-white);
+    padding: 80px 2rem 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 48px,
+      rgba(255,255,255,0.025) 48px,
+      rgba(255,255,255,0.025) 49px
+    );
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-category {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    margin-bottom: 1.5rem;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: var(--warm-white);
+  }
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--light-muted);
+    font-style: italic;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 1.2rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    color: var(--light-muted);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+ 
+  /* ── LAYOUT ──────────────────────────────────────────── */
+  .page-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .page-wrapper { grid-template-columns: 1fr; }
+    .sidebar { order: -1; }
+  }
+ 
+  /* ── ARTICLE ─────────────────────────────────────────── */
+  .article-body { min-width: 0; }
+ 
+  .section-block {
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-block:last-of-type { border-bottom: none; }
+ 
+  .section-tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .section-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+  }
+  .author-line {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--gold);
+  }
+  .section-block p {
+    color: var(--ink-soft);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  .section-block p:last-child { margin-bottom: 0; }
+ 
+  /* ── PULL QUOTE ──────────────────────────────────────── */
+  .pull-quote {
+    border-left: 4px solid var(--accent);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--warm-white);
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--ink) !important;
+    margin: 0 !important;
+    line-height: 1.5;
+  }
+ 
+  /* ── BLOG IMAGE ──────────────────────────────────────── */
+  .blog-image {
+    margin: 1.8rem 0;
+    border: 1px solid var(--border);
+  }
+  .blog-image img {
+    width: 100%;
+    display: block;
+    max-height: 380px;
+    object-fit: cover;
+  }
+  .img-caption {
+    padding: 0.6rem 0.9rem;
+    background: var(--warm-white);
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+    border-top: 1px solid var(--border);
+  }
+ 
+  /* ── REFERENCES ──────────────────────────────────────── */
+  .references-section {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  .references-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.7rem;
+  }
+  .references-section ol {
+    padding-left: 1.4rem;
+  }
+  .references-section li {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.8rem;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+  .ref-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed var(--border);
+    font-style: italic;
+  }
+ 
+  /* ── SIDEBAR ─────────────────────────────────────────── */
+  .sidebar { min-width: 0; }
+ 
+  .sidebar-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-bottom: 1.8rem;
+  }
+  .sidebar-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .authors-list { list-style: none; }
+  .authors-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .authors-list li:last-child { border-bottom: none; }
+  .author-name { font-weight: 600; color: var(--ink); display: block; }
+  .author-role {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+ 
+  .info-box {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.8rem;
+  }
+  .info-box p {
+    font-size: 0.83rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .info-box strong { color: var(--ink); }
+ 
+  .key-concepts { list-style: none; }
+  .key-concepts li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .key-concepts li:last-child { border-bottom: none; }
+  .kc-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+ 
+  /* ── FOOTER ──────────────────────────────────────────── */
+  footer {
+    background: var(--ink);
+    color: var(--muted);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    margin-top: 4rem;
+  }
+  footer strong { color: var(--warm-white); }
+  .apa-note {
+    font-size: 0.72rem;
+    margin-top: 0.5rem;
+    color: var(--light-muted);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+ 
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <span class="site-logo">Blog Académico · UNIMINUTO</span>
+    <nav class="site-nav">
+      <a href="#">Inicio</a>
+      <a href="#">Lecturas</a>
+      <a href="#">Referencias</a>
+    </nav>
+  </div>
+</header>
+ 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-category">Comunicación &amp; Narrativa</span>
+    <h1>Narrativa Digital<br>vs. Narrativa Tradicional</h1>
+    <p class="hero-subtitle">Un análisis colaborativo sobre cómo contamos historias en la era de las pantallas</p>
+    <div class="hero-meta">
+      <span>📅 2025</span>
+      <span>🏫 Corporación Universitaria Minuto de Dios</span>
+      <span>✍️ Trabajo colaborativo</span>
+    </div>
+  </div>
+</section>
+ 
+<!-- MAIN CONTENT -->
+<div class="page-wrapper">
+  <main class="article-body">
+ 
+    <!-- SECCIÓN 1: INTRODUCCIÓN -->
+    <article class="section-block">
+      <span class="section-tag">Introducción</span>
+      <h2>Narrativa Digital y Narrativa Tradicional</h2>
+      <div class="author-line">Escrito por Isabela Cardozo Romero</div>
+ 
+      <div class="blog-image">
+        <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+          <rect width="900" height="260" fill="#2c1f0e"/>
+          <rect x="0" y="210" width="900" height="8" fill="#6b4c2a"/>
+          <rect x="80" y="80" width="48" height="130" rx="3" fill="#a52a2a"/>
+          <rect x="88" y="100" width="32" height="3" fill="#d4a017" opacity="0.8"/>
+          <rect x="88" y="108" width="24" height="2" fill="#d4a017" opacity="0.5"/>
+          <rect x="132" y="65" width="38" height="145" rx="3" fill="#1e4d8c"/>
+          <rect x="139" y="85" width="24" height="3" fill="#c8d8f0" opacity="0.8"/>
+          <rect x="174" y="95" width="42" height="115" rx="3" fill="#3a7a22"/>
+          <rect x="181" y="112" width="28" height="3" fill="#c8f0b0" opacity="0.8"/>
+          <rect x="220" y="90" width="22" height="120" rx="2" fill="#b8860b"/>
+          <rect x="246" y="75" width="50" height="135" rx="3" fill="#6b2a6b"/>
+          <rect x="254" y="95" width="34" height="3" fill="#e8c0f0" opacity="0.8"/>
+          <rect x="300" y="100" width="36" height="110" rx="3" fill="#8b4513"/>
+          <path d="M400 55 Q520 45 520 175 Q520 45 640 55 L640 180 Q520 170 520 180 Q520 170 400 180 Z" fill="#f5f0e8"/>
+          <path d="M520 50 L520 180" stroke="#c8b89a" stroke-width="1.5"/>
+          <rect x="415" y="85" width="90" height="2" fill="#c8b89a" opacity="0.7"/>
+          <rect x="415" y="95" width="80" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="415" y="105" width="85" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="415" y="115" width="70" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="415" y="125" width="88" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="415" y="135" width="75" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="535" y="85" width="90" height="2" fill="#c8b89a" opacity="0.7"/>
+          <rect x="535" y="95" width="80" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="535" y="105" width="85" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="535" y="115" width="70" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="535" y="125" width="88" height="2" fill="#c8b89a" opacity="0.5"/>
+          <rect x="660" y="80" width="44" height="130" rx="3" fill="#1e5050"/>
+          <rect x="668" y="98" width="28" height="3" fill="#a0d8d8" opacity="0.8"/>
+          <rect x="710" y="95" width="30" height="115" rx="2" fill="#6b3300"/>
+          <rect x="744" y="70" width="52" height="140" rx="3" fill="#2a2a8c"/>
+          <rect x="752" y="90" width="36" height="3" fill="#c0c0f8" opacity="0.8"/>
+          <rect x="806" y="125" width="8" height="85" rx="2" fill="#f0e8d0"/>
+          <ellipse cx="810" cy="123" rx="5" ry="8" fill="#ff9900" opacity="0.9"/>
+          <ellipse cx="810" cy="120" rx="3" ry="5" fill="#ffff99" opacity="0.8"/>
+          <text x="450" y="240" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#c8b89a" opacity="0.9">La narrativa tradicional: siglos de historia impresa</text>
+        </svg>
+        <p class="img-caption">La historia del texto y la imprenta: un legado de siglos. Ilustración generada con inteligencia artificial.</p>
+      </div>
+ 
+      <p>Para comenzar, es importante hablar de la narrativa digital y la narrativa tradicional, ya que ambas son formas de contar historias, pero lo hacen de manera diferente. La narrativa tradicional es la de siempre, como los libros o los cuentos que usan principalmente el texto o la narración oral. En cambio, la narrativa digital utiliza la tecnología e incluye elementos como imágenes, videos y sonidos, lo que la hace más dinámica y llamativa.</p>
+ 
+      <p>Hoy en día, con el uso constante del internet y las redes sociales, la narrativa digital ha tomado mucha importancia y ha cambiado la forma en que entendemos las historias. Sin embargo, la narrativa tradicional sigue siendo fundamental, ya que es la base de la comunicación. Por eso, es importante comparar ambas para entender sus diferencias y su impacto en la actualidad.</p>
+    </article>
+ 
+    <!-- SECCIÓN 2: DIFERENCIAS -->
+    <article class="section-block">
+      <span class="section-tag">Análisis comparativo</span>
+      <h2>Diferencias entre la narrativa digital y la narrativa tradicional</h2>
+      <div class="author-line">Escrito por Salome Quintana Salas</div>
+ 
+      <div class="blog-image">
+        <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+          <rect width="900" height="260" fill="#0d1117"/>
+          <!-- monitor -->
+          <rect x="60" y="40" width="340" height="200" rx="10" fill="#1c2333"/>
+          <rect x="65" y="45" width="330" height="175" rx="6" fill="#0d1f3c"/>
+          <!-- screen content lines -->
+          <rect x="80" y="65" width="200" height="6" rx="3" fill="#58a6ff" opacity="0.8"/>
+          <rect x="80" y="80" width="290" height="4" rx="2" fill="#8b949e" opacity="0.6"/>
+          <rect x="80" y="92" width="270" height="4" rx="2" fill="#8b949e" opacity="0.5"/>
+          <rect x="80" y="104" width="280" height="4" rx="2" fill="#8b949e" opacity="0.5"/>
+          <rect x="80" y="116" width="250" height="4" rx="2" fill="#8b949e" opacity="0.4"/>
+          <!-- image placeholder on screen -->
+          <rect x="80" y="132" width="120" height="72" rx="4" fill="#1f3a5c"/>
+          <rect x="84" y="136" width="112" height="64" rx="2" fill="#1d4a7a"/>
+          <ellipse cx="140" cy="158" rx="18" ry="14" fill="#58a6ff" opacity="0.3"/>
+          <polygon points="132,150 132,166 152,158" fill="#58a6ff" opacity="0.7"/>
+          <!-- text next to image -->
+          <rect x="210" y="135" width="150" height="4" rx="2" fill="#8b949e" opacity="0.6"/>
+          <rect x="210" y="147" width="130" height="4" rx="2" fill="#8b949e" opacity="0.4"/>
+          <rect x="210" y="159" width="140" height="4" rx="2" fill="#8b949e" opacity="0.4"/>
+          <rect x="210" y="171" width="120" height="4" rx="2" fill="#8b949e" opacity="0.3"/>
+          <!-- monitor stand -->
+          <rect x="210" y="218" width="20" height="22" rx="2" fill="#30363d"/>
+          <rect x="185" y="238" width="70" height="5" rx="2" fill="#30363d"/>
+          <!-- tablet -->
+          <rect x="430" y="80" width="180" height="140" rx="10" fill="#1c2333"/>
+          <rect x="436" y="86" width="168" height="120" rx="6" fill="#0d1f3c"/>
+          <!-- tablet content -->
+          <rect x="446" y="98" width="120" height="5" rx="2" fill="#3fb950" opacity="0.8"/>
+          <rect x="446" y="111" width="148" height="3" rx="2" fill="#8b949e" opacity="0.5"/>
+          <rect x="446" y="121" width="135" height="3" rx="2" fill="#8b949e" opacity="0.4"/>
+          <rect x="446" y="131" width="148" height="3" rx="2" fill="#8b949e" opacity="0.4"/>
+          <!-- links/tags -->
+          <rect x="446" y="145" width="55" height="14" rx="7" fill="#1f3a5c"/>
+          <rect x="449" y="149" width="49" height="6" rx="3" fill="#58a6ff" opacity="0.6"/>
+          <rect x="508" y="145" width="45" height="14" rx="7" fill="#1f3a2a"/>
+          <rect x="511" y="149" width="39" height="6" rx="3" fill="#3fb950" opacity="0.6"/>
+          <rect x="446" y="163" width="148" height="3" rx="2" fill="#8b949e" opacity="0.3"/>
+          <rect x="446" y="173" width="130" height="3" rx="2" fill="#8b949e" opacity="0.3"/>
+          <!-- home button -->
+          <circle cx="520" cy="208" r="8" fill="#30363d"/>
+          <!-- phone -->
+          <rect x="640" y="55" width="100" height="175" rx="12" fill="#1c2333"/>
+          <rect x="646" y="65" width="88" height="148" rx="6" fill="#0d1f3c"/>
+          <!-- phone content -->
+          <rect x="654" y="78" width="72" height="30" rx="4" fill="#1d2d44"/>
+          <rect x="658" y="82" width="64" height="22" rx="2" fill="#1d4a7a" opacity="0.5"/>
+          <rect x="654" y="116" width="72" height="4" rx="2" fill="#f0883e" opacity="0.8"/>
+          <rect x="654" y="128" width="72" height="3" rx="2" fill="#8b949e" opacity="0.5"/>
+          <rect x="654" y="138" width="60" height="3" rx="2" fill="#8b949e" opacity="0.4"/>
+          <rect x="654" y="148" width="65" height="3" rx="2" fill="#8b949e" opacity="0.4"/>
+          <!-- share icons -->
+          <circle cx="663" cy="165" r="6" fill="#1f3a5c"/>
+          <circle cx="681" cy="165" r="6" fill="#1f2a3c"/>
+          <circle cx="699" cy="165" r="6" fill="#1f3a2a"/>
+          <!-- phone home bar -->
+          <rect x="672" y="195" width="40" height="4" rx="2" fill="#30363d"/>
+          <!-- glow effects -->
+          <ellipse cx="240" cy="200" rx="100" ry="20" fill="#58a6ff" opacity="0.04"/>
+          <ellipse cx="520" cy="190" rx="60" ry="12" fill="#3fb950" opacity="0.04"/>
+          <ellipse cx="690" cy="200" rx="40" ry="10" fill="#f0883e" opacity="0.04"/>
+          <!-- title -->
+          <text x="450" y="248" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#58a6ff" opacity="0.7">De la página al píxel: los nuevos soportes de la narrativa</text>
+        </svg>
+        <p class="img-caption">De la página al píxel: los nuevos soportes de la narrativa. Ilustración generada con inteligencia artificial.</p>
+      </div>
+ 
+      <p>La narrativa digital y la narrativa tradicional presentan diferencias importantes en la forma en que se construyen y se transmiten los mensajes. En primer lugar, la narrativa tradicional, como los libros o textos impresos, suele ser lineal, es decir, sigue un orden definido de inicio, desarrollo y final. En este tipo de narrativa, el lector tiene un papel más pasivo, ya que se limita a seguir la secuencia propuesta por el autor. Además, generalmente utiliza un lenguaje más formal y una estructura más rígida.</p>
+ 
+      <div class="pull-quote">
+        <p>«En los entornos digitales el lector no sigue necesariamente un solo camino, sino que puede interactuar con el contenido, explorar diferentes rutas y profundizar en la información según sus intereses.»</p>
+      </div>
+ 
+      <p>En cambio, la narrativa digital se caracteriza por integrar distintos formatos como imágenes, videos, audios e hipervínculos, lo que hace que la experiencia de lectura sea más dinámica y variada. A diferencia de la narrativa tradicional, en los entornos digitales el lector no sigue necesariamente un solo camino, sino que puede interactuar con el contenido, explorar diferentes rutas y profundizar en la información según sus intereses. Este cambio refleja la evolución de las formas de comunicación, donde los relatos ya no se limitan únicamente al texto escrito, sino que incorporan elementos audiovisuales que enriquecen el mensaje (Karbaum Padilla, 2021).</p>
+ 
+      <p>Por otro lado, la narrativa digital también se relaciona con el concepto de narrativa transmedia, en el cual las historias se desarrollan a través de diferentes plataformas y formatos, manteniendo una continuidad en los personajes o en la trama. Esto permite ampliar el universo narrativo y generar una mayor conexión con el público, ya que el contenido puede ser consumido desde distintos medios (Paredes Otero, 2022).</p>
+ 
+      <p>Finalmente, otra diferencia importante está en la forma de comunicación. Mientras que la narrativa tradicional suele ser más formal y estructurada, la narrativa digital busca ser más cercana, breve y adaptada al tipo de público. Esto se debe a que en los entornos digitales la atención de los usuarios es más limitada, por lo que se requiere captar su interés de manera rápida y efectiva. En conclusión, ambas formas de narrativa son importantes, pero la narrativa digital se adapta mejor a las dinámicas actuales, al ser más interactiva, flexible y acorde con las nuevas formas de comunicación.</p>
+    </article>
+ 
+    <!-- SECCIÓN 3: ARGUMENTACIÓN -->
+    <article class="section-block">
+      <span class="section-tag">Argumentación</span>
+      <h2>¿Cuál argumenta mejor y por qué?</h2>
+      <div class="author-line">Escrito por Paola Andrea Chilito Díaz</div>
+ 
+      <div class="blog-image">
+        <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+          <rect width="900" height="260" fill="#1a0a00"/>
+          <!-- central idea bubble -->
+          <ellipse cx="450" cy="130" rx="80" ry="50" fill="#8b1a1a"/>
+          <ellipse cx="450" cy="130" rx="74" ry="44" fill="#a52a2a"/>
+          <text x="450" y="125" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#f5e8e0" font-weight="bold">Argumento</text>
+          <text x="450" y="143" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#f5c8b8">central</text>
+          <!-- node: imagen -->
+          <ellipse cx="180" cy="80" rx="58" ry="34" fill="#1e4d8c"/>
+          <text x="180" y="76" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#c8d8f0">🖼 Imagen</text>
+          <text x="180" y="92" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8ab0d8">visual</text>
+          <line x1="236" y1="93" x2="372" y2="115" stroke="#d4a017" stroke-width="1.5" opacity="0.7"/>
+          <!-- node: video -->
+          <ellipse cx="140" cy="180" rx="58" ry="34" fill="#2d5a1b"/>
+          <text x="140" y="176" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#c8f0b0">▶ Video</text>
+          <text x="140" y="192" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8ad870">audiovisual</text>
+          <line x1="196" y1="172" x2="372" y2="142" stroke="#d4a017" stroke-width="1.5" opacity="0.7"/>
+          <!-- node: audio -->
+          <ellipse cx="270" cy="220" rx="58" ry="30" fill="#4a1a4a"/>
+          <text x="270" y="216" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#e8c0f0">♪ Audio</text>
+          <text x="270" y="232" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#c090e0">podcast</text>
+          <line x1="320" y1="210" x2="390" y2="168" stroke="#d4a017" stroke-width="1.5" opacity="0.7"/>
+          <!-- node: hipervinculo -->
+          <ellipse cx="720" cy="80" rx="70" ry="34" fill="#1a3030"/>
+          <text x="720" y="76" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#a0d8d8">🔗 Hipervínculo</text>
+          <text x="720" y="92" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#60a8a8">interactivo</text>
+          <line x1="652" y1="93" x2="528" y2="115" stroke="#d4a017" stroke-width="1.5" opacity="0.7"/>
+          <!-- node: interaccion -->
+          <ellipse cx="760" cy="180" rx="70" ry="34" fill="#3d1a00"/>
+          <text x="760" y="176" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#f0c890">✍ Interacción</text>
+          <text x="760" y="192" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#d09060">usuario activo</text>
+          <line x1="692" y1="170" x2="528" y2="145" stroke="#d4a017" stroke-width="1.5" opacity="0.7"/>
+          <!-- node: transmedia -->
+          <ellipse cx="640" cy="225" rx="70" ry="28" fill="#1a1a5c"/>
+          <text x="640" y="221" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#c0c0f8">📱 Transmedia</text>
+          <text x="640" y="237" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#8080d0">multiplataforma</text>
+          <line x1="580" y1="218" x2="510" y2="168" stroke="#d4a017" stroke-width="1.5" opacity="0.7"/>
+          <!-- gold dots at intersections -->
+          <circle cx="372" cy="115" r="4" fill="#d4a017"/>
+          <circle cx="372" cy="142" r="4" fill="#d4a017"/>
+          <circle cx="390" cy="168" r="4" fill="#d4a017"/>
+          <circle cx="528" cy="115" r="4" fill="#d4a017"/>
+          <circle cx="528" cy="145" r="4" fill="#d4a017"/>
+          <circle cx="510" cy="168" r="4" fill="#d4a017"/>
+          <text x="450" y="252" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#d4a017" opacity="0.8">La narrativa digital: un ecosistema multimedia de argumentos</text>
+        </svg>
+        <p class="img-caption">La narrativa digital integra múltiples formatos para fortalecer el argumento. Ilustración generada con inteligencia artificial.</p>
+      </div>
+ 
+      <p>En la actualidad, tanto la narrativa digital como la tradicional tienen la capacidad de construir argumentos sólidos; sin embargo, la narrativa digital logra argumentar mejor debido a los recursos que ofrece el entorno multimedia.</p>
+ 
+      <p>En primer lugar, la narrativa digital permite integrar diferentes formatos como imágenes, videos, audios e hipervínculos, lo que fortalece la comprensión del mensaje y hace que los argumentos sean más claros y persuasivos. A diferencia del texto tradicional, que depende únicamente de la palabra escrita, el formato digital puede mostrar evidencias de manera más directa y dinámica, facilitando que el lector entienda y verifique la información.</p>
+ 
+      <div class="pull-quote">
+        <p>«La narrativa digital favorece la interacción del usuario, permitiéndole explorar contenidos adicionales, comentar o profundizar en ciertos temas mediante enlaces.»</p>
+      </div>
+ 
+      <p>Además, la narrativa digital favorece la interacción del usuario, permitiéndole explorar contenidos adicionales, comentar o profundizar en ciertos temas mediante enlaces. Esto genera una experiencia más activa y participativa, lo que refuerza la construcción del argumento. Por otro lado, aunque la narrativa tradicional se caracteriza por su profundidad, orden lógico y desarrollo detallado de ideas, puede resultar más limitada en cuanto a formas de presentar evidencias y captar la atención del lector.</p>
+    </article>
+ 
+    <!-- SECCIÓN 4: CONCLUSIÓN -->
+    <article class="section-block">
+      <span class="section-tag">Reflexión final</span>
+      <h2>Una conclusión sobre la narrativa digital y tradicional</h2>
+      <div class="author-line">Escrito por Olga Lucía Briceño Otalora</div>
+ 
+      <div class="blog-image">
+        <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+          <rect width="900" height="260" fill="#0f0f1a"/>
+          <!-- left side: analog/warm -->
+          <rect x="0" y="0" width="350" height="260" fill="#1a0e00"/>
+          <!-- book stack left -->
+          <rect x="50" y="120" width="120" height="16" rx="3" fill="#a52a2a"/>
+          <rect x="55" y="104" width="110" height="16" rx="3" fill="#8b4513"/>
+          <rect x="60" y="88" width="100" height="16" rx="3" fill="#6b2a6b"/>
+          <rect x="52" y="72" width="115" height="16" rx="3" fill="#1e4d8c"/>
+          <rect x="58" y="136" width="108" height="16" rx="3" fill="#3a7a22"/>
+          <!-- candle -->
+          <rect x="198" y="100" width="10" height="68" rx="3" fill="#f0e8d0"/>
+          <ellipse cx="203" cy="97" rx="7" ry="10" fill="#ff9900" opacity="0.9"/>
+          <ellipse cx="203" cy="93" rx="4" ry="6" fill="#ffff99" opacity="0.8"/>
+          <ellipse cx="203" cy="170" rx="20" ry="5" fill="#d4a017" opacity="0.1"/>
+          <!-- quill pen -->
+          <line x1="240" y1="85" x2="260" y2="155" stroke="#c8b89a" stroke-width="1.5"/>
+          <path d="M240 85 Q255 90 265 80 Q258 100 260 155" fill="#f0e8c0" opacity="0.6"/>
+          <!-- label left -->
+          <text x="175" y="215" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#d4a017" opacity="0.9">Narrativa</text>
+          <text x="175" y="233" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#d4a017" opacity="0.9">Tradicional</text>
+          <!-- right side: digital/cool -->
+          <rect x="550" y="0" width="350" height="260" fill="#001a0e"/>
+          <!-- screen glow -->
+          <ellipse cx="725" cy="120" rx="130" ry="80" fill="#0d3a2a" opacity="0.5"/>
+          <!-- simplified phone/tablet -->
+          <rect x="640" y="55" width="170" height="120" rx="8" fill="#0d2a1a"/>
+          <rect x="646" y="61" width="158" height="108" rx="5" fill="#0a1f14"/>
+          <!-- digital content lines -->
+          <rect x="656" y="76" width="100" height="5" rx="2" fill="#3fb950" opacity="0.8"/>
+          <rect x="656" y="88" width="138" height="3" rx="2" fill="#8b949e" opacity="0.5"/>
+          <rect x="656" y="97" width="125" height="3" rx="2" fill="#8b949e" opacity="0.4"/>
+          <!-- video thumb -->
+          <rect x="656" y="108" width="60" height="38" rx="3" fill="#0d3a2a"/>
+          <polygon points="672,122 672,138 690,130" fill="#3fb950" opacity="0.8"/>
+          <!-- link chips -->
+          <rect x="726" y="110" width="58" height="14" rx="7" fill="#0d2a3a"/>
+          <rect x="729" y="114" width="52" height="6" rx="3" fill="#58a6ff" opacity="0.6"/>
+          <rect x="726" y="128" width="48" height="14" rx="7" fill="#1f2a0d"/>
+          <rect x="729" y="132" width="42" height="6" rx="3" fill="#3fb950" opacity="0.6"/>
+          <rect x="656" y="150" width="138" height="3" rx="2" fill="#8b949e" opacity="0.3"/>
+          <!-- stand -->
+          <rect x="718" y="175" width="15" height="18" rx="2" fill="#1c2a1c"/>
+          <rect x="700" y="191" width="51" height="4" rx="2" fill="#1c2a1c"/>
+          <text x="725" y="220" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#3fb950" opacity="0.9">Narrativa</text>
+          <text x="725" y="238" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#3fb950" opacity="0.9">Digital</text>
+          <!-- bridge / merge gradient in center -->
+          <rect x="340" y="0" width="220" height="260" fill="url(#bridgeGrad)"/>
+          <defs>
+            <linearGradient id="bridgeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1a0e00"/>
+              <stop offset="40%" stop-color="#1a1208"/>
+              <stop offset="60%" stop-color="#0d1a10"/>
+              <stop offset="100%" stop-color="#001a0e"/>
+            </linearGradient>
+          </defs>
+          <!-- bridge text -->
+          <text x="450" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#c8b89a" opacity="0.9" font-style="italic">«Ambas formas</text>
+          <text x="450" y="138" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#c8b89a" opacity="0.9" font-style="italic">son importantes»</text>
+          <!-- divider line center -->
+          <line x1="450" y1="30" x2="450" y2="200" stroke="#c8b89a" stroke-width="0.5" opacity="0.3" stroke-dasharray="4,4"/>
+          <text x="450" y="248" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#c8b89a" opacity="0.7">El futuro de la narrativa combina lo mejor de ambos mundos</text>
+        </svg>
+        <p class="img-caption">El futuro de la narrativa combina lo mejor de ambos mundos. Ilustración generada con inteligencia artificial.</p>
+      </div>
+ 
+      <p><strong>Lorem Ipsum</strong> es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
+    </article>
+ 
+    <!-- REFERENCIAS APA -->
+    <section class="references-section">
+      <h3>Referencias bibliográficas</h3>
+      <ol>
+        <li>
+          Karbaum Padilla, G. (2021). <em>La evolución de la narrativa audiovisual: analógica, transmedia y social media.</em> Universidad Peruana de Ciencias Aplicadas.
+        </li>
+        <li>
+          Paredes Otero, G. (2022). <em>Narrativas y usuarios de la sociedad transmedia.</em> Dykinson.
+        </li>
+      </ol>
+      <p class="ref-note">Referencias presentadas conforme a las normas APA 7.ª edición. Las citas dentro del texto siguen el formato autor-año: (Karbaum Padilla, 2021) y (Paredes Otero, 2022).</p>
+    </section>
+ 
+  </main>
+ 
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+ 
+    <div class="sidebar-card">
+      <h4>Autores</h4>
+      <ul class="authors-list">
+        <li>
+          <span class="author-name">Juan Sebastián Suárez Rodríguez</span>
+          <span class="author-role">Creador del foro</span>
+        </li>
+        <li>
+          <span class="author-name">Isabela Cardozo Romero</span>
+          <span class="author-role">Introducción al tema</span>
+        </li>
+        <li>
+          <span class="author-name">Salome Quintana Salas</span>
+          <span class="author-role">Diferencias narrativas</span>
+        </li>
+        <li>
+          <span class="author-name">Paola Andrea Chilito Díaz</span>
+          <span class="author-role">Argumentación comparativa</span>
+        </li>
+        <li>
+          <span class="author-name">Olga Lucía Briceño Otalora</span>
+          <span class="author-role">Conclusión y reflexión</span>
+        </li>
+      </ul>
+    </div>
+ 
+    <div class="info-box">
+      <p><strong>Institución:</strong> Corporación Universitaria Minuto de Dios — UNIMINUTO<br><br>
+      <strong>Curso:</strong> NRC-8199 · Lectura y Escritura en el Contexto Digital</p>
+    </div>
+ 
+    <div class="sidebar-card">
+      <h4>Conceptos clave</h4>
+      <ul class="key-concepts">
+        <li><span class="kc-dot"></span>Narrativa lineal vs. no lineal</li>
+        <li><span class="kc-dot"></span>Lector pasivo vs. lector activo</li>
+        <li><span class="kc-dot"></span>Narrativa transmedia</li>
+        <li><span class="kc-dot"></span>Entornos multimedia</li>
+        <li><span class="kc-dot"></span>Hipervínculos e interactividad</li>
+        <li><span class="kc-dot"></span>Plataformas digitales</li>
+      </ul>
+    </div>
+ 
+    <div class="sidebar-card">
+      <h4>Fuentes consultadas</h4>
+      <ul class="key-concepts">
+        <li><span class="kc-dot"></span>Karbaum Padilla (2021) — UPC Perú</li>
+        <li><span class="kc-dot"></span>Paredes Otero (2022) — Dykinson</li>
+      </ul>
+    </div>
+ 
+  </aside>
+</div>
+ 
+<!-- FOOTER -->
+<footer>
+  <p><strong>Blog académico colaborativo</strong> · Corporación Universitaria Minuto de Dios (UNIMINUTO)</p>
+  <p class="apa-note">Publicación con fines académicos. Las imágenes provienen de Unsplash bajo licencia libre de derechos. Las referencias bibliográficas siguen el formato APA 7.ª edición.</p>
+</footer>
+ 
+</body>
+</html>
+ 
